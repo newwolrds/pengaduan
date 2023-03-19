@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Complaint;
 use App\Models\ComplaintImage;
+use App\Models\Response;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +14,46 @@ class ComplaintController extends Controller
 {
     public function index()
     {
-        $complaints = Complaint::orderBy('created_at', 'DESC')->get();
+        $complaints = Complaint::orderBy('created_at', 'DESC')
+        ->when(request()->q, function($query) {
+            $query->where('title', 'like', '%'.request()->q.'%')
+            ->orWhere('description', 'like', '%'.request()->q.'%')
+            ->orWhereHas('user', function($query) {
+                $query->where('name', 'like', '%'.request()->q.'%');
+            });
+        })
+        ->paginate(10);
+        $complaints->append(request()->all());
         return view('admin.complaint.index', compact('complaints'));
     }
     public function create()
     {
         return view('admin.complaint.create');
+    }
+    public function response($code)
+    {
+        $complaint = Complaint::where('code', $code)->first();
+        $responses = Response::where('complaint_id', $complaint->id)->get();
+        return view('admin.complaint.make_response', compact('complaint','responses'));
+    }
+    public function store_response(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'sometimes|mimes:jpg,jpeg,png,bmp,tiff,pdf,zip,rar|max:120000',
+        ]);
+        if($request->file){
+            $img = $request->file('file');
+            $size = $img->getSize();
+            $namaFile = time() . "_" . $img->getClientOriginalName();
+            Storage::disk('public')->put('response-file/'.$namaFile, file_get_contents($img->getRealPath()));
+        }
+        Response::create([
+            'user_id' => auth()->user()->id,
+            'complaint_id' => $request->complaint_id,
+            'response' => $request->response,
+            'file' => $namaFile ?? null,
+        ]);
+        return redirect()->back()->with('success', 'Berhasil ditanggapi');
     }
     public function store(Request $request)
     {
@@ -46,7 +81,7 @@ class ComplaintController extends Controller
                         'title' => $request->title,
                         'date' => Carbon::now()->toDateString(),
                         'description' => $request->description,
-                        'level' => 'rendah',
+                        'level' => $request->level,
                         'status' => 'PENDING',
                     ]);
                     if($request->image_description){
@@ -86,10 +121,18 @@ class ComplaintController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-    public function delete(Request $request, $code)
+    public function delete(Request $request)
     {
-        $complaint = Complaint::where('code', $code)->first();
+        $complaint = Complaint::where('code', $request->code)->first();
         $complaint->delete();
         return redirect()->route('complaint.index')->with('success', 'Berhasil dihapus');
+    }
+    public function change_status(Request $request)
+    {
+        $complaint = Complaint::where('id', $request->id)->first();
+        $complaint->update([
+            'status' => $request->status,
+        ]);
+        return redirect()->back()->with('success', 'Status pengaduan berhasil diubah');
     }
 }

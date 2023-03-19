@@ -1,4 +1,5 @@
 @extends('layouts.landing.master')
+@section('title', 'Masuk')
 <style>
     #mainNav {
         background-color: #212529 !important;

@@ -17,7 +17,7 @@
             @guest
                 @if(request()->is('login*') || request()->is('register*') || request()->is('my-complaint*'))
                 @else
-                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Buat Pengaduan</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Masuk</a></li>
                 @endif
                 <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Daftar</a></li>
             @else

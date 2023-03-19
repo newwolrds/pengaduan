@@ -28,9 +28,30 @@
                                 <tr>
                                     <td>{{ $complaint->title }}</td>
                                     <td>{!! $complaint->description !!}</td>
-                                    <td>{{ $complaint->status }}</td>
+                                    <td>
+                                        @if($complaint->status == 'PENDING')
+                                            <span class="badge alert-warning">PENDING</span>
+                                        @elseif($complaint->status == 'REJECTED')
+                                        <span class="badge alert-danger">REJECTED</span>
+                                        @elseif($complaint->status == 'DONE')
+                                        <span class="badge alert-success">DONE</span>
+                                        @endif
+                                    </td>
                                     <td><a href="{{ Storage::disk('local')->url('complaint-image/'. $complaint->complaintImages()->first()->image) }}" target="_blank"><img src="{{ Storage::disk('local')->url('complaint-image/'. $complaint->complaintImages()->first()->image) }}" style="max-height:200px;max-width:100px;"></a></td>
-                                    <td>{{ $complaint->responses()->count() > 0 ? $complaint->responses()->first()->response : 'Belum ada tanggapan' }}</td>
+                                    <td>
+                                        @if($complaint->responses()->count() > 0)
+                                            <ol>
+                                                @foreach($complaint->responses()->get() as $response)
+                                                    <li>{!! $response->response !!}</li>
+                                                    @if($response->file)
+                                                    <a href="{{ Storage::disk('local')->url('response-file/'. $response->file) }}" target="_blank"><i class="fas fa-eye"></i> File Lampiran</a>
+                                                    @endif
+                                                @endforeach
+                                            </ol>
+                                        @else
+                                            Belum ada tanggapan
+                                        @endif
+                                    </td>
                                 </tr>
                             @empty
                             <tr>

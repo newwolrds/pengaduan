@@ -1,4 +1,5 @@
 @extends('layouts.landing.master')
+@section('title', 'Daftar Akun')
 <style>
     #mainNav {
         background-color: #212529 !important;
@@ -68,7 +69,7 @@
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('Daftar') }}
                                 </button>
                             </div>
                         </div>

@@ -36,4 +36,10 @@ class ResponseController extends Controller
         ]);
         return redirect()->route('admin.response.index')->with('success', 'Berhasil diubah');
     }
+    public function delete(Request $request)
+    {
+        $response = Response::find($request->id);
+        $response->delete();
+        return redirect()->back()->with('success', 'Berhasil dihapus');
+    }
 }

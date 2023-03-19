@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('complaint_id')->references('id')->on('complaints')->onDelete('cascade');
             $table->longText('response');
+            $table->string('file')->nullable();
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });

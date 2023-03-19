@@ -1,15 +1,16 @@
 @extends('layouts.landing.master')
+@section('title', 'Home')
 @section('content')
 
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
             <div class="masthead-subheading"></div>
-            <div class="masthead-heading text-uppercase">Pengaduan Masyarakat</div>
+            <div class="masthead-heading text-uppercase">Aplikasi Pengaduan</div>
             @guest
-            <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('login') }}">Buat Pengaduan</a>
+        <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('login') }}"><i class="fas fa-pencil-alt"></i> Buat Pengaduan</a>
             @else
-            <a class="btn btn-primary btn-xl text-uppercase" href="#contact">Buat Pengaduan</a>
+            <a class="btn btn-primary btn-xl text-uppercase" href="#contact"><i class="fas fa-pencil-alt"></i> Buat Pengaduan</a>
             @endguest
         </div>
     </header>
@@ -64,7 +65,7 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="{{ Storage::disk('local')->url('complaint-image/'. $complaint->complaintImages()->first()->image) }}" alt="..." />
+                                <img class="img-fluid" src="{{ Storage::disk('local')->url('complaint-image/'. $complaint->complaintImages()->first()->image) }}" style="min-height:230px;max-height:230px;width:100%;" />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">{{ $complaint->title }}</div>
@@ -84,7 +85,8 @@
                                             <div class="modal-body">
                                                 <!-- Project details-->
                                                 <h2 class="text-uppercase">{{ $complaint->title }}</h2>
-                                                <img class="img-fluid d-block mx-auto" src="{{ Storage::disk('local')->url('complaint-image/'. $complaint->complaintImages()->first()->image) }}" alt="..." />
+                                                <img class="img-fluid d-block mx-auto" src="{{ Storage::disk('local')->url('complaint-image/'. $complaint->complaintImages()->first()->image) }}" style="min-height:530px;max-height:530px;width:100%;object-fit: cover !important;" />
+                                                <span class="text-muted">{{ Carbon\Carbon::parse($complaint->created_at)->isoFormat('dddd, D MMMM Y') }} {{ date('H:i', strtotime($complaint->created_at)) }}</span>
                                                 <p>{!! $complaint->description !!}</p>
                                                 <ul class="list-inline">
                                                     <li>
@@ -135,12 +137,12 @@
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
                         <div class="form-group mb-md-0">
-                            <input class="form-control" id="title" type="text" name="title" value="{{ old('title') }}" placeholder="Judul pengaduan"/>
+                            <input class="form-control" id="title" type="text" name="title" value="{{ old('title') }}" placeholder="Judul pengaduan, Contoh : Jembatan Roboh"/>
                             <div class="invalid-feedback">A judul harus diisi.</div>
                         </div>  
                         <div class="form-group form-group-textarea mb-md-0 mt-1">
                             <!-- Message input-->
-                            <textarea class="form-control" id="description" name="description" placeholder="Keterangan lengkap *" >{{ old('description') }}</textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="Keterangan lengkap, Contoh : Terjadi jebatan roboh di kecamatan ..." >{{ old('description') }}</textarea>
                             <div class="invalid-feedback">Keterangan lengkap.</div>
                         </div>
                     </div>
@@ -153,7 +155,19 @@
                             
                             <input class="form-control" id="image_description" type="file" name="image_description"/>
                             <div class="invalid-feedback">A phone number is required.</div>
-                        </div>  
+                        </div>
+                        <div class="form-group mb-md-0 mt-1">
+                            <!-- Phone number input-->
+                            <div class="card mb-1">
+                                <div class="card-header"><label for="level">Kategori Pengaduan</label></div>
+                            </div>
+                            <select name="level" id="level" class="custom-select" required>
+                                <option value="rendah" {{ old('level') == 'rendah' ? 'selected' : '' }}>Rendah</option>
+                                <option value="sedang" {{ old('level') == 'sedang' ? 'selected' : '' }}>Sedang</option>
+                                <option value="tinggi" {{ old('level') == 'tinggi' ? 'selected' : '' }}>Tinggi</option>
+                            </select>
+                            <div class="invalid-feedback">A Kategori Pengaduan is required.</div>
+                        </div>
                     </div>
                 </div>
                 <!-- Submit success message-->
