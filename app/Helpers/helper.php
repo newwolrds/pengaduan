@@ -12,7 +12,7 @@ use App\Models\Complaint;
     }
     function authenticated()
     {
-        if(auth()->user()->role == 'admin'){
+        if(auth()->user()->role == 'admin' || auth()->user()->role == 'user'){
             return redirect()->route('admin_dashboard.index')->with('success', 'Selamat datang '. auth()->user()->name );
         }else{
             return redirect()->route('home')->with('success', 'Selamat datang '. auth()->user()->name );
@@ -21,5 +21,9 @@ use App\Models\Complaint;
     function countComplaintPendings()
     {
         return Complaint::where('status', 'PENDING')->count();
+    }
+    function checkComplaintRespondedUser($complaintId)
+    {
+        return $complaints = Complaint::where('id', '!=', $complaintId)->where('responded_by', auth()->user()->id)->where('status_pengaduan', 'belum_selesai')->count();
     }
 ?>

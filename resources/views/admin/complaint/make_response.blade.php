@@ -1,4 +1,5 @@
 @extends('layouts.admin.master')
+@section('title', 'Detail Pengaduan')
 @section('content')
 
 <div class="midde_cont">
@@ -86,7 +87,7 @@
                                 <textarea name="response" id="response" cols="5" class="form-control @error('response') is-invalid @enderror">{!! old('response') !!}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="response"><h5>Lampiran</h5> <small>*Optional</small></label>
+                                <label for="response"><h5>Lampiran <b>Gambar</b></h5> <small>*Optional</small></label>
                                 <input type="file" name="file" class="form-control-file">
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Tanggapi</button>

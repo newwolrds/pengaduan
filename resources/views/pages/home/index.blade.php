@@ -6,7 +6,7 @@
     <header class="masthead">
         <div class="container">
             <div class="masthead-subheading"></div>
-            <div class="masthead-heading text-uppercase">Aplikasi Pengaduan</div>
+            <div class="masthead-heading text-uppercase">Pengaduan Masyarakat</div>
             @guest
         <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('login') }}"><i class="fas fa-pencil-alt"></i> Buat Pengaduan</a>
             @else
@@ -137,12 +137,12 @@
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
                         <div class="form-group mb-md-0">
-                            <input class="form-control" id="title" type="text" name="title" value="{{ old('title') }}" placeholder="Judul pengaduan, Contoh : Jembatan Roboh"/>
+                            <input class="form-control" id="title" type="text" name="title" value="{{ old('title') }}" placeholder="Judul pengaduan, Contoh : Jembatan Roboh" required/>
                             <div class="invalid-feedback">A judul harus diisi.</div>
                         </div>  
                         <div class="form-group form-group-textarea mb-md-0 mt-1">
                             <!-- Message input-->
-                            <textarea class="form-control" id="description" name="description" placeholder="Keterangan lengkap, Contoh : Terjadi jebatan roboh di kecamatan ..." >{{ old('description') }}</textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="Keterangan lengkap, Contoh : Terjadi jebatan roboh di kecamatan ..." required>{{ old('description') }}</textarea>
                             <div class="invalid-feedback">Keterangan lengkap.</div>
                         </div>
                     </div>
@@ -150,10 +150,19 @@
                         <div class="form-group mb-md-0">
                             <!-- Phone number input-->
                             <div class="card mb-1">
+                                <div class="card-header"><label for="link_video">Link Video <small>*Optional</small></label></div>
+                            </div>
+                            
+                            <input class="form-control" id="link_video" type="text" name="link_video" placeholder="Contoh : https://youtube.com...."/>
+                            {{-- <div class="invalid-feedback"></div> --}}
+                        </div>
+                        <div class="form-group mb-md-0 mt-1">
+                            <!-- Phone number input-->
+                            <div class="card mb-1">
                                 <div class="card-header"><label for="image_description">Gambar Penjelas</label></div>
                             </div>
                             
-                            <input class="form-control" id="image_description" type="file" name="image_description"/>
+                            <input class="form-control" id="image_description" type="file" name="image_description" required/>
                             <div class="invalid-feedback">A phone number is required.</div>
                         </div>
                         <div class="form-group mb-md-0 mt-1">

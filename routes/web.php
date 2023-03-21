@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function() {
         Route::get('', [ComplaintController::class, 'index'])->name('index');
         Route::get('{code}/response', [ComplaintController::class, 'response'])->name('make_response');
         Route::post('store-response', [ComplaintController::class, 'store_response'])->name('store_response');
+        Route::post('export-pdf', [ComplaintController::class, 'export_pdf'])->name('export_pdf');
         Route::put('change-status', [ComplaintController::class, 'change_status'])->name('change_status');
         
         Route::get('edit/{code}', [ComplaintController::class, 'edit'])->name('edit');
@@ -70,6 +71,9 @@ Route::name('landing.')->group(function() {
     });
     Route::name('my_complaint.')->prefix('my-complaint')->group(function() {
         Route::get('', [LandingComplaintController::class, 'index'])->name('index');
+        Route::middleware('CheckRole:admin,pengadu')->group(function() {
+            Route::put('', [LandingComplaintController::class, 'update_status'])->name('update_status');
+        });
     });
     
 });

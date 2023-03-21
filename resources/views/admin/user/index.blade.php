@@ -1,4 +1,5 @@
 @extends('layouts.admin.master')
+@section('title', 'Data User')
 @section('content')
 {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.cs"> --}}
@@ -128,6 +129,7 @@
                         <label for="role">Role</label>
                         <select name="role" id="role" class="form-control" required>
                             <option value="">~ Pilih ~</option>
+                            <option value="pengadu" {{ old('role') == 'pengadu' ? 'selected' : '' }}>Pengadu</option>
                             <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                         </select>
@@ -211,6 +213,5 @@
         $('#edit').find('input[name="email"]').val(email);
         $('#edit').find('select[name="role"]').val(role);
     });
-    $('#datatable').DataTable();
 </script>
 @endpush

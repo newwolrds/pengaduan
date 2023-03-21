@@ -8,7 +8,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- site metas -->
-      <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+        <title>Pengaduan - @yield('title')</title>
       <meta name="keywords" content="">
       <meta name="description" content="">
       <meta name="author" content="">
@@ -37,7 +37,11 @@
         <div class="full_container">
             <div class="inner_container">
             <!-- Sidebar  -->
+            @if(auth()->user()->role == 'admin')
             @include('layouts.admin.components._admin_sidebar')
+            @elseif(auth()->user()->role == 'user')
+            @include('layouts.admin.components._user_sidebar')
+            @endif
                 <!-- end sidebar -->
                 <!-- right content -->
                 
