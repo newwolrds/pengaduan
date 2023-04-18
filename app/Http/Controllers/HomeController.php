@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function getData(Request $request)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'eyJpdiI6IkdndFliS0pYOFBJSGUvWWIwY2xvYVE9PSIsInZhbHVlIjoiSldEaWpDSHZmdjE3SUx3dEFhaHYyZz09IiwibWFjIjoiYWYwMThkN2FmZmRiOWJkNjdkMzU5MzFkMWNiNzUwNWY2NTdlNzA2ZDkwNjk1MzEzOGEwN2VhOTVmMmYxYWEwZiIsInRhZyI6IiJ9MzlfRDhjyNfQJP2',
+            'Authorization' => 'eyJpdiI6IkRHalU3UlYwQkV4SHlJcC9FWHdqSVE9PSIsInZhbHVlIjoicGxISWRFQVBOM2NyWG9VTVpQZGRldz09IiwibWFjIjoiODk4NzhhNGQ5ODljOGVjZjI3ZDk0ZWEzZmQwMjZjYWI2OWUyNjMxNDJjN2IzMzAwMWMxMDc1NDNhNzNmN2MyMSIsInRhZyI6IiJ98vmZTMbBqDmVNlb',
         ])->get('https://apiext-dev.id-trec.com/api/v1/principals');
 
         if ($response->successful()) {
