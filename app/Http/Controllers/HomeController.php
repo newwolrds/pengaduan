@@ -41,7 +41,7 @@ class HomeController extends Controller
             ], 200);
         } else {
             $errorCode = $response->status();
-            $errorMessage = $response->json();
+            $errorMessage = $response->json()['message'];
             return response()->json([
                 'status' => false,
                 'error' => $errorMessage,
