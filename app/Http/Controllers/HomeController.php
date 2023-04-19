@@ -32,7 +32,7 @@ class HomeController extends Controller
     {
         $response = Http::withHeaders([
             'Authorization' => 'eyJpdiI6IkRHalU3UlYwQkV4SHlJcC9FWHdqSVE9PSIsInZhbHVlIjoicGxISWRFQVBOM2NyWG9VTVpQZGRldz09IiwibWFjIjoiODk4NzhhNGQ5ODljOGVjZjI3ZDk0ZWEzZmQwMjZjYWI2OWUyNjMxNDJjN2IzMzAwMWMxMDc1NDNhNzNmN2MyMSIsInRhZyI6IiJ98vmZTMbBqDmVNlb',
-        ])->get('https://apiext-dev.id-trec.com/api/v1/principals');
+        ])->get('http://localhost:8000/api/v1/principals');
 
         if ($response->successful()) {
             return response()->json([
